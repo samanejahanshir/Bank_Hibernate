@@ -24,10 +24,9 @@ public class User {
     private Date createUserDate;
     @UpdateTimestamp
     private Date infoUpdateLastDate;
-    //  private Map<Date,String> listOfUpdates;
+    private String listOfUpdates="";
     @OneToMany(cascade = CascadeType.ALL)
     private List<Account> accounts=new ArrayList<>();
-
 
     public static final class UserBuilder {
         private int id;
@@ -37,7 +36,6 @@ public class User {
         private UserType userType;
         private Date createUserDate;
         private Date infoUpdateLastDate;
-        private Map<Date, String> listOfUpdates;
         private List<Account> accounts=new ArrayList<>();
 
         private UserBuilder() {
@@ -82,11 +80,6 @@ public class User {
             return this;
         }
 
-        public UserBuilder withListOfUpdates(Map<Date, String> listOfUpdates) {
-            this.listOfUpdates = listOfUpdates;
-            return this;
-        }
-
         public UserBuilder withAccounts(List<Account> accounts) {
             this.accounts = accounts;
             return this;
@@ -101,7 +94,6 @@ public class User {
             user.family = this.family;
             user.userType = this.userType;
             user.infoUpdateLastDate = this.infoUpdateLastDate;
-            //  user.listOfUpdates = this.listOfUpdates;
             user.accounts = this.accounts;
             return user;
         }
@@ -139,6 +131,14 @@ public class User {
         return listOfUpdates;
     }*/
 
+    public String getListOfUpdates() {
+        return listOfUpdates;
+    }
+
+    public void setListOfUpdates(String listOfUpdates) {
+        this.listOfUpdates += listOfUpdates+",";
+    }
+
     public List<Account> getAccounts() {
         return accounts;
     }
@@ -153,7 +153,20 @@ public class User {
                 ", userType=" + userType +
                 ", createUserDate=" + createUserDate +
                 ", infoUpdateLastDate=" + infoUpdateLastDate +
+                ", listOfUpdate=" + listOfUpdates +
                 ", accounts=" + accounts +
                 '}';
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setFamily(String family) {
+        this.family = family;
+    }
+
+    public void setNationalCode(String nationalCode) {
+        this.nationalCode = nationalCode;
     }
 }

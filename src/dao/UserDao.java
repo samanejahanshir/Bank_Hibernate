@@ -6,9 +6,7 @@ import org.hibernate.Transaction;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import java.sql.SQLException;
 import java.util.List;
-
 
 public class UserDao extends AccessDao {
     public UserDao()  {
@@ -45,7 +43,5 @@ public class UserDao extends AccessDao {
         transaction.commit();
         session.close();
         return user1;
-
-
     }
 }

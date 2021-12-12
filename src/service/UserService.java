@@ -5,6 +5,7 @@ import models.Account;
 import models.User;
 
 import java.sql.SQLException;
+import java.util.Date;
 
 public class UserService {
     public boolean withDraw(User user, int amount, int accountNumber) throws SQLException, ClassNotFoundException {
@@ -20,7 +21,6 @@ public class UserService {
             System.out.println("your balance is not enough");
             return false;
         }
-
     }
 
     public boolean deposit(User user, int amount, int accountNumber) throws SQLException, ClassNotFoundException {
@@ -31,19 +31,22 @@ public class UserService {
         UserDao userDao = new UserDao();
         userDao.update(user);
         return true;
-
     }
 
     public double getBalance(User user, int accountNumber) throws SQLException, ClassNotFoundException {
         UserDao userDao = new UserDao();
         user = userDao.getUser(user);
-        return user.getAccounts().get(0).getBalance();
-
+        return user.getAccounts().stream().filter(account -> account.getAccountNumber()==accountNumber).findAny().get().getBalance();
     }
 
     public int createAccount(User user) {
         UserDao userDao = new UserDao();
         return userDao.update(user);
+    }
+    public void updateInformation(User user,String filedUpdate){
+        UserDao userDao=new UserDao();
+        user.setListOfUpdates(filedUpdate+" was edited :  "+new Date());
+        userDao.update(user);
 
 
     }
