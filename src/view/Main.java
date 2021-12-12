@@ -1,5 +1,6 @@
 package view;
 
+import dao.UserDao;
 import models.Account;
 import models.User;
 import models.enums.AccountType;
@@ -38,10 +39,9 @@ public class Main {
                 }
             } catch (RuntimeException | SQLException | ClassNotFoundException e) {
                 System.out.println(e.getMessage());
+                scanner.nextLine();
             }
         }
-
-
     }
 
     private static void register() {
@@ -91,7 +91,7 @@ public class Main {
         outer:
         while (true) {
             try {
-                System.out.println("1.with draw\n2.deposit\n3.show balance\n4.create new account\n5.exit");
+                System.out.println("1.with draw\n2.deposit\n3.show balance\n4.create new account\n5.edit information\n6.exit");
                 switch (scanner.nextInt()) {
                     case 1:
                         System.out.println("enter amount to with draw :");
@@ -114,16 +114,17 @@ public class Main {
                     case 3:
                         System.out.println("enter account number : ");
                         int accountNumber = scanner.nextInt();
-                        userService.getBalance(user, accountNumber);
+                        System.out.println("balance : " + userService.getBalance(user, accountNumber));
                         break;
                     case 4:
                         user.getAccounts().add(createAccount(user));
-                        if(userService.createAccount(user)==1){
+                        if (userService.createAccount(user) == 1) {
                             System.out.println("create account is successfully");
                         }
-
                         break;
                     case 5:
+                        editInformation(user);
+                    case 6:
                         break outer;
                     default:
                         throw new RuntimeException("error => enter 1 - 4");
@@ -132,6 +133,7 @@ public class Main {
                 System.out.println(e.getMessage());
             } catch (SQLException | ClassNotFoundException throwables) {
                 throwables.printStackTrace();
+
             }
         }
     }
@@ -176,5 +178,44 @@ public class Main {
                 .withBalance(balance)
                 .build();
         return account;
+    }
+
+    private static void editInformation(User user) {
+        String filedUpdate;
+        outer:
+        while (true) {
+            System.out.println("enter number :\n1.edit name\n2.edit family\n3.edit national code\n4.exit");
+            try {
+                switch (scanner.nextInt()) {
+                    case 1:
+                        System.out.println("enter name :");
+                        String name = scanner.next();
+                        user.setName(name);
+                        filedUpdate = "name";
+                        break;
+                    case 2:
+                        System.out.println("enter family :");
+                        String family = scanner.next();
+                        user.setFamily(family);
+                        filedUpdate = "family";
+                        break;
+                    case 3:
+                        System.out.println("enter national code :");
+                        String nationalCode = scanner.next();
+                        user.setNationalCode(nationalCode);
+                        filedUpdate = "national code";
+                        break;
+                    case 4:
+                        break outer;
+                    default:
+                        throw new RuntimeException("enter 1 - 4 please !");
+                }
+                UserService userService = new UserService();
+                userService.updateInformation(user, filedUpdate);
+                System.out.println(filedUpdate + " was update");
+            } catch (RuntimeException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 }
