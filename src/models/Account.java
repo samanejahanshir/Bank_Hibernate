@@ -22,6 +22,8 @@ public class Account {
     @Transient
     private final int countTransaction = 3;
     private Map<Date,TransactionType> transactions;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private User user;
 
 
     public static final class AccountBuilder {

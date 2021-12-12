@@ -19,7 +19,7 @@ public class User {
     private Date createUserDate;
     private  Date infoUpdateLastDate;
     private Map<Date,String> listOfUpdates;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user",fetch = FetchType.EAGER)
     private List<Account> accounts;
 
 
