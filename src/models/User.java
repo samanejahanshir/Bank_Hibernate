@@ -18,7 +18,7 @@ public class User {
     private UserType userType;
     private Date createUserDate;
     private  Date infoUpdateLastDate;
-    private Map<String,Date> listOfUpdates;
+    private Map<Date,String> listOfUpdates;
     @ManyToOne(cascade = CascadeType.ALL)
     private List<Account> accounts;
 
@@ -78,11 +78,11 @@ public class User {
         this.infoUpdateLastDate = infoUpdateLastDate;
     }
 
-    public Map<String, Date> getListOfUpdates() {
+    public Map<Date, String> getListOfUpdates() {
         return listOfUpdates;
     }
 
-    public void setListOfUpdates(Map<String, Date> listOfUpdates) {
+    public void setListOfUpdates(Map<Date, String> listOfUpdates) {
         this.listOfUpdates = listOfUpdates;
     }
 
