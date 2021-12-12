@@ -18,9 +18,9 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("---------- Welcome ---------- ");
-        System.out.println("1.sign in\n2.register\n3.exit");
         outer:
         while (true) {
+            System.out.println("1.sign in\n2.register\n3.exit");
             try {
                 switch (scanner.nextInt()) {
                     case 1:
@@ -120,21 +120,34 @@ public class Main {
 
     private static void showMenuUser(User user) {
         UserService userService = new UserService();
-        System.out.println("1.with draw\n2.deposit\n3.show balance\n4.exit");
         outer:
         while (true) {
             try {
+                System.out.println("1.with draw\n2.deposit\n3.show balance\n4.exit");
                 switch (scanner.nextInt()) {
                     case 1:
                         System.out.println("enter amount to with draw :");
-                        userService.withDraw(user, scanner.nextInt());
+                        int amountWithdraw = scanner.nextInt();
+                        System.out.println("enter account number : ");
+                        int accountNumberWithDraw = scanner.nextInt();
+                        if (userService.withDraw(user, amountWithdraw, accountNumberWithDraw)) {
+                            System.out.println("with draw was successfully");
+                        }
                         break;
                     case 2:
                         System.out.println("enter amount to deposit :");
-                        userService.deposit(user, scanner.nextInt());
+                        int amountDeposit = scanner.nextInt();
+                        System.out.println("enter account number : ");
+                        int accountNumberDeposit = scanner.nextInt();
+                        if (userService.deposit(user, amountDeposit, accountNumberDeposit)) {
+                            System.out.println("deposit is successfully");
+                        }
                         break;
                     case 3:
-                        userService.getBalance(user);
+                        System.out.println("enter account number : ");
+                        int accountNumber = scanner.nextInt();
+                        userService.getBalance(user, accountNumber);
+                        break;
                     case 4:
                         break outer;
                     default:
@@ -142,6 +155,8 @@ public class Main {
                 }
             } catch (RuntimeException e) {
                 System.out.println(e.getMessage());
+            } catch (SQLException | ClassNotFoundException throwables) {
+                throwables.printStackTrace();
             }
         }
     }
