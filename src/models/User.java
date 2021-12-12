@@ -18,7 +18,7 @@ public class User {
     private UserType userType;
     private Date createUserDate;
     private  Date infoUpdateLastDate;
-    private Map<Date,String> listOfUpdates;
+  //  private Map<Date,String> listOfUpdates;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "user",fetch = FetchType.EAGER)
     private List<Account> accounts;
 
@@ -95,7 +95,7 @@ public class User {
             user.family = this.family;
             user.userType = this.userType;
             user.infoUpdateLastDate = this.infoUpdateLastDate;
-            user.listOfUpdates = this.listOfUpdates;
+          //  user.listOfUpdates = this.listOfUpdates;
             user.accounts = this.accounts;
             return user;
         }
@@ -129,9 +129,9 @@ public class User {
         return infoUpdateLastDate;
     }
 
-    public Map<Date, String> getListOfUpdates() {
+   /* public Map<Date, String> getListOfUpdates() {
         return listOfUpdates;
-    }
+    }*/
 
     public List<Account> getAccounts() {
         return accounts;

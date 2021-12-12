@@ -15,7 +15,8 @@
         <property name="connection.pool_size">1</property>
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
-
+        <mapping class="models.User"></mapping>
+        <mapping class="models.Account"></mapping>
 
     </session-factory>
 </hibernate-configuration>
