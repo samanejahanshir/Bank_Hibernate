@@ -1,14 +1,16 @@
 package service;
 
+import models.User;
+
 public class UserService {
-    public boolean withDraw(int amount){
+    public boolean withDraw(User user, int amount){
         return false;
     }
-    public boolean deposit(int amount){
+    public boolean deposit(User user,int amount){
         return false;
 
     }
-    public double getBalance(){
+    public double getBalance(User user){
         return 0;
 
     }
