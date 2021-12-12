@@ -18,6 +18,6 @@ public class BankService {
     }
     public User searchUser(User user,long cartNum) throws SQLException, ClassNotFoundException {
         UserDao userDao=new UserDao();
-        return  userDao.getUser(user,cartNum);
+        return  userDao.getUser(user);
     }
 }
