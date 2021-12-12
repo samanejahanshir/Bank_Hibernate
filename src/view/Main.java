@@ -37,6 +37,16 @@ public class Main {
     }
 
     private static void register() {
+        BankService bankService=new BankService();
+        try{
+            System.out.println("enter name :");
+            System.out.println("enter family :");
+            System.out.println("enter national code");
+
+
+        }catch (RuntimeException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     private static void signIn() {
@@ -85,7 +95,5 @@ public class Main {
         }
     }
 
-    private static void getUserFromConsole() {
 
-    }
 }

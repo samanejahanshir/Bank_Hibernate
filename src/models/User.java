@@ -1,6 +1,8 @@
 package models;
 
 import models.enums.UserType;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -15,8 +17,11 @@ public class User {
     private  String name;
     private  String family;
     private  String nationalCode;
+    @Enumerated(EnumType.STRING)
     private UserType userType;
+    @CreationTimestamp
     private Date createUserDate;
+    @UpdateTimestamp
     private  Date infoUpdateLastDate;
   //  private Map<Date,String> listOfUpdates;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "user",fetch = FetchType.EAGER)

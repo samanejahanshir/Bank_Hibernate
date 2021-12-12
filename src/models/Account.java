@@ -2,6 +2,7 @@ package models;
 
 import models.enums.AccountType;
 import models.enums.TransactionType;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -14,10 +15,13 @@ public class Account {
     private int id;
     private int accountNumber;
     private long cartNumber;
+    @CreationTimestamp
     private Date createAccount;
+    @Enumerated(EnumType.STRING)
     private AccountType accountType;
     private double balance;
     private int cvv2;
+    @Temporal(TemporalType.DATE)
     private Date expireDate;
     @Transient
     private final int countTransaction = 3;
