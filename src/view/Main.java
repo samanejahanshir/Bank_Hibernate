@@ -9,6 +9,8 @@ import service.UserService;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Random;
 import java.util.Scanner;
@@ -51,52 +53,17 @@ public class Main {
             String family = scanner.next();
             System.out.println("enter national code");
             String nationalCode = scanner.next();
-            System.out.println("Account type : 1.current  2.short term  3.long term  4.good lean");
-            AccountType type = AccountType.getType(scanner.nextInt());
-            System.out.println("enter balance : ");
-            double balance = scanner.nextDouble();
-            int numberAccount = (int) createRandomInt(100000, 999999);
-            if (numberAccount < 0) {
-                numberAccount *= -1;
-            }
-            int cvv2 = (int) createRandomInt(1000, 9999);
-            if (cvv2 < 0) {
-                cvv2 *= -1;
-            }
-            long numberCart = createRandomInt(100000000, 999999999);
-            if (numberCart < 0) {
-                numberCart *= -1;
-            }
-            Date now = new Date();
-            SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-           /* LocalDate localDate = LocalDate.parse(format.format(now)).plusYears(3);
-            Date expDate = Date.from(localDate.atStartOfDay()
-                    .atZone(ZoneId.systemDefault())
-                    .toInstant());*/
-
-
             User user = User.UserBuilder.anUser().withName(name)
                     .withFamily(family)
                     .withNationalCode(nationalCode)
                     .withUserType(UserType.NO_HISTORY)
                     .build();
-            Account account = Account.AccountBuilder.anAccount().withAccountType(type)
-                    .withAccountNumber(numberAccount)
-                    .withCartNumber(numberCart)
-                    .withCvv2(cvv2)
-                    // .withExpireDate(expDate)
-                    .withUser(user)
-                    .withBalance(balance)
-                    .build();
+            Account account = createAccount(user);
             user.getAccounts().add(account);
             bankService.saveUserToDb(user);
             // bankService.saveAccountToDb(account);
-
-
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
-        } catch (SQLException | ClassNotFoundException throwables) {
-            throwables.printStackTrace();
         }
     }
 
@@ -106,7 +73,8 @@ public class Main {
         String name = scanner.next();
         System.out.println("enter  family :");
         String family = scanner.next();
-        //   String cartNum = scanner.next();
+       /* System.out.println("enter  cart number :");
+        String cartNum = scanner.next();*/
         User user = User.UserBuilder.anUser().withName(name)
                 .withFamily(family)
                 .build();
@@ -123,7 +91,7 @@ public class Main {
         outer:
         while (true) {
             try {
-                System.out.println("1.with draw\n2.deposit\n3.show balance\n4.exit");
+                System.out.println("1.with draw\n2.deposit\n3.show balance\n4.create new account\n5.exit");
                 switch (scanner.nextInt()) {
                     case 1:
                         System.out.println("enter amount to with draw :");
@@ -149,6 +117,13 @@ public class Main {
                         userService.getBalance(user, accountNumber);
                         break;
                     case 4:
+                        user.getAccounts().add(createAccount(user));
+                        if(userService.createAccount(user)==1){
+                            System.out.println("create account is successfully");
+                        }
+
+                        break;
+                    case 5:
                         break outer;
                     default:
                         throw new RuntimeException("error => enter 1 - 4");
@@ -168,5 +143,38 @@ public class Main {
         return min + i;
     }
 
+    private static Account createAccount(User user) {
+        System.out.println("Account type : 1.current  2.short term  3.long term  4.good lean");
+        AccountType type = AccountType.getType(scanner.nextInt());
+        System.out.println("enter balance : ");
+        double balance = scanner.nextDouble();
+        int numberAccount = (int) createRandomInt(100000, 999999);
+        if (numberAccount < 0) {
+            numberAccount *= -1;
+        }
+        int cvv2 = (int) createRandomInt(1000, 9999);
+        if (cvv2 < 0) {
+            cvv2 *= -1;
+        }
+        long numberCart = createRandomInt(100000000, 999999999);
+        if (numberCart < 0) {
+            numberCart *= -1;
+        }
+        Date now = new Date();
 
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        LocalDate localDate = LocalDate.parse(format.format(now)).plusYears(3);
+        Date expDate = Date.from(localDate.atStartOfDay()
+                .atZone(ZoneId.systemDefault())
+                .toInstant());
+        Account account = Account.AccountBuilder.anAccount().withAccountType(type)
+                .withAccountNumber(numberAccount)
+                .withCartNumber(numberCart)
+                .withCvv2(cvv2)
+                .withExpireDate(expDate)
+                .withUser(user)
+                .withBalance(balance)
+                .build();
+        return account;
+    }
 }
