@@ -13,6 +13,7 @@ public class UserService {
         if (account.getBalance() > amount) {
             user.getAccounts().remove(account);
             account.setBalance(account.getBalance() - amount);
+            account.setTransactions("withDraw "+amount+" :  "+new Date());
             user.getAccounts().add(account);
             UserDao userDao = new UserDao();
             userDao.update(user);
@@ -27,6 +28,7 @@ public class UserService {
         Account account = user.getAccounts().stream().filter(account1 -> account1.getAccountNumber() == accountNumber).findAny().get();
         user.getAccounts().remove(account);
         account.setBalance(account.getBalance() + amount);
+        account.setTransactions("deposit "+amount+" :  "+new Date());
         user.getAccounts().add(account);
         UserDao userDao = new UserDao();
         userDao.update(user);

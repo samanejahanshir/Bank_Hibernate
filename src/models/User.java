@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Entity
 public class User {
@@ -24,9 +23,9 @@ public class User {
     private Date createUserDate;
     @UpdateTimestamp
     private Date infoUpdateLastDate;
-    private String listOfUpdates="";
+    private String listOfUpdates = "";
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Account> accounts=new ArrayList<>();
+    private List<Account> accounts = new ArrayList<>();
 
     public static final class UserBuilder {
         private int id;
@@ -36,7 +35,7 @@ public class User {
         private UserType userType;
         private Date createUserDate;
         private Date infoUpdateLastDate;
-        private List<Account> accounts=new ArrayList<>();
+        private List<Account> accounts = new ArrayList<>();
 
         private UserBuilder() {
         }
@@ -136,7 +135,7 @@ public class User {
     }
 
     public void setListOfUpdates(String listOfUpdates) {
-        this.listOfUpdates += listOfUpdates+",";
+        this.listOfUpdates += listOfUpdates + ",";
     }
 
     public List<Account> getAccounts() {
