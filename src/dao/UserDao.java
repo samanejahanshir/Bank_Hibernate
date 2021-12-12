@@ -4,7 +4,10 @@ import models.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import java.sql.SQLException;
+import java.util.List;
 
 
 public class UserDao extends AccessDao {
@@ -20,34 +23,27 @@ public class UserDao extends AccessDao {
         return id;
     }
 
-    public User getUser(User user, long cartNum) throws SQLException, ClassNotFoundException {
+    public int update(User user) {
         Session session = AccessDao.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        User user1 = session.get(User.class, 1);
+        session.update(user);
+        transaction.commit();
+        session.close();
+        return 1;
+    }
+
+    public User getUser(User user) throws SQLException, ClassNotFoundException {
+        Session session = AccessDao.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<User> criteria = builder.createQuery(User.class);
+        criteria.from(User.class);
+        List<User> userList = session.createQuery(criteria).getResultList();
+        User user1 = userList.stream().filter(user2 -> user2.getName().equalsIgnoreCase(user.getName())
+                       && user2.getFamily().equalsIgnoreCase(user.getFamily())).findAny().get();
         System.out.println(user1);
         transaction.commit();
         session.close();
-       /* User user1=null;
-        if(getConnection()!=null){
-            PreparedStatement statement = getConnection().prepareStatement("select * from user inner join user_account inner  join account where name =? and family=?");
-            statement.setString(1,user.getName());
-            statement.setString(2,user.getFamily());
-            ResultSet resultSet = statement.executeQuery();
-            Account account=Account.AccountBuilder.anAccount().withAccountType(AccountType.valueOf(resultSet.getString("accountType")))
-                    .withBalance(resultSet.getDouble("balance"))
-                    .withAccountNumber(resultSet.getInt("accountNumber"))
-                    .withCreateAccount(resultSet.getDate("createAccount"))
-                    .withCartNumber(resultSet.getInt("cartNumber"))
-                    .withCvv2(resultSet.getInt("cvv2"))
-                    .build();
-            user1=User.UserBuilder.anUser().withName(resultSet.getString("name"))
-                    .withFamily(resultSet.getString("family"))
-                    .withNationalCode(resultSet.getString("nationalCode"))
-                    .withCreateUserDate(resultSet.getDate("createUserDate"))
-                    .withId(resultSet.getInt("id")).build();
-            user1.getAccounts().add(account);
-
-        }*/
         return user1;
 
 

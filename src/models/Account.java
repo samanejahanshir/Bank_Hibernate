@@ -163,6 +163,10 @@ public class Account {
         return transactions;
     }*/
 
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
     @Override
     public String toString() {
         return "Account{" +
