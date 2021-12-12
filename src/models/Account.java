@@ -1,12 +1,10 @@
 package models;
 
 import models.enums.AccountType;
-import models.enums.TransactionType;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Map;
 
 @Entity
 public class Account {
@@ -28,9 +26,7 @@ public class Account {
     private User user;
     @Transient
     private final int countTransaction = 3;
-    //  private Map<Date,TransactionType> transactions;
-
-
+    private String transactions="";
 
     public static final class AccountBuilder {
         private int id;
@@ -43,7 +39,6 @@ public class Account {
         private Date expireDate;
         @ManyToOne(cascade = CascadeType.ALL)
         private User user;
-     //   private Map<Date, TransactionType> transactions;
 
         private AccountBuilder() {
         }
@@ -95,16 +90,6 @@ public class Account {
             this.expireDate = expireDate;
             return this;
         }
-
-      /*  public AccountBuilder withCountTransaction(int countTransaction) {
-            this.countTransaction = countTransaction;
-            return this;
-        }*/
-
-       /* public AccountBuilder withTransactions(Map<Date, TransactionType> transactions) {
-            this.transactions = transactions;
-            return this;
-        }*/
 
         public Account build() {
             Account account = new Account();
@@ -161,12 +146,29 @@ public class Account {
         return countTransaction;
     }
 
-   /* public Map<Date, TransactionType> getTransactions() {
-        return transactions;
-    }*/
-
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    public String getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(String transactions) {
+       String[] transactionSplit= this.transactions.split(",");
+       if(transactionSplit.length<countTransaction) {
+           this.transactions += transactions + ",";
+       }else{
+           for(int i=1;i<countTransaction;i++) {
+               transactionSplit[i-1] = transactionSplit[i];
+           }
+           transactionSplit[countTransaction-1]=transactions+",";
+           this.transactions="";
+           for (String str : transactionSplit) {
+               this.transactions+=str+",";
+           }
+       }
+
     }
 
     @Override
@@ -181,6 +183,7 @@ public class Account {
                 ", cvv2=" + cvv2 +
                 ", expireDate=" + expireDate +
                 ", countTransaction=" + countTransaction +
+                ", Transactions=" + transactions +
                 ", user=" + user +
                 '}';
     }

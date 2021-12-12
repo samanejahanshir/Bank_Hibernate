@@ -1,6 +1,5 @@
 package view;
 
-import dao.UserDao;
 import models.Account;
 import models.User;
 import models.enums.AccountType;
