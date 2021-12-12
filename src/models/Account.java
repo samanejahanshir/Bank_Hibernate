@@ -39,8 +39,9 @@ public class Account {
         private double balance;
         private int cvv2;
         private Date expireDate;
+        private User user;
         private int countTransaction = 3;
-        private Map<Date, TransactionType> transactions;
+     //   private Map<Date, TransactionType> transactions;
 
         private AccountBuilder() {
         }
@@ -78,6 +79,10 @@ public class Account {
             this.balance = balance;
             return this;
         }
+        public AccountBuilder withUser(User user) {
+            this.user = user;
+            return this;
+        }
 
         public AccountBuilder withCvv2(int cvv2) {
             this.cvv2 = cvv2;
@@ -94,10 +99,10 @@ public class Account {
             return this;
         }
 
-        public AccountBuilder withTransactions(Map<Date, TransactionType> transactions) {
+       /* public AccountBuilder withTransactions(Map<Date, TransactionType> transactions) {
             this.transactions = transactions;
             return this;
-        }
+        }*/
 
         public Account build() {
             Account account = new Account();
@@ -116,6 +121,10 @@ public class Account {
 
     public int getId() {
         return id;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public int getAccountNumber() {
@@ -153,4 +162,20 @@ public class Account {
    /* public Map<Date, TransactionType> getTransactions() {
         return transactions;
     }*/
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", accountNumber=" + accountNumber +
+                ", cartNumber=" + cartNumber +
+                ", createAccount=" + createAccount +
+                ", accountType=" + accountType +
+                ", balance=" + balance +
+                ", cvv2=" + cvv2 +
+                ", expireDate=" + expireDate +
+                ", countTransaction=" + countTransaction +
+                ", user=" + user +
+                '}';
+    }
 }

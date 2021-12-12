@@ -5,6 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -24,8 +25,8 @@ public class User {
     @UpdateTimestamp
     private Date infoUpdateLastDate;
     //  private Map<Date,String> listOfUpdates;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
-    private List<Account> accounts;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Account> accounts=new ArrayList<>();
 
 
     public static final class UserBuilder {
@@ -37,7 +38,7 @@ public class User {
         private Date createUserDate;
         private Date infoUpdateLastDate;
         private Map<Date, String> listOfUpdates;
-        private List<Account> accounts;
+        private List<Account> accounts=new ArrayList<>();
 
         private UserBuilder() {
         }
@@ -140,5 +141,19 @@ public class User {
 
     public List<Account> getAccounts() {
         return accounts;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", family='" + family + '\'' +
+                ", nationalCode='" + nationalCode + '\'' +
+                ", userType=" + userType +
+                ", createUserDate=" + createUserDate +
+                ", infoUpdateLastDate=" + infoUpdateLastDate +
+                ", accounts=" + accounts +
+                '}';
     }
 }
