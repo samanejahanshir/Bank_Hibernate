@@ -13,30 +13,30 @@ import java.util.Map;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  int id;
-    private  String name;
-    private  String family;
-    private  String nationalCode;
+    private int id;
+    private String name;
+    private String family;
+    private String nationalCode;
     @Enumerated(EnumType.STRING)
     private UserType userType;
     @CreationTimestamp
     private Date createUserDate;
     @UpdateTimestamp
-    private  Date infoUpdateLastDate;
-  //  private Map<Date,String> listOfUpdates;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user",fetch = FetchType.EAGER)
+    private Date infoUpdateLastDate;
+    //  private Map<Date,String> listOfUpdates;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
     private List<Account> accounts;
 
 
     public static final class UserBuilder {
-        private  int id;
-        private  String name;
-        private  String family;
-        private  String nationalCode;
+        private int id;
+        private String name;
+        private String family;
+        private String nationalCode;
         private UserType userType;
         private Date createUserDate;
-        private  Date infoUpdateLastDate;
-        private Map<Date,String> listOfUpdates;
+        private Date infoUpdateLastDate;
+        private Map<Date, String> listOfUpdates;
         private List<Account> accounts;
 
         private UserBuilder() {
@@ -100,7 +100,7 @@ public class User {
             user.family = this.family;
             user.userType = this.userType;
             user.infoUpdateLastDate = this.infoUpdateLastDate;
-          //  user.listOfUpdates = this.listOfUpdates;
+            //  user.listOfUpdates = this.listOfUpdates;
             user.accounts = this.accounts;
             return user;
         }

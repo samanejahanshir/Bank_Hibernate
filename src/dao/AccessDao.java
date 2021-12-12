@@ -7,8 +7,8 @@ public class AccessDao {
     private static SessionFactory sessionFactory;
 
     public static SessionFactory getSessionFactory() {
-        if (sessionFactory==null){
-            sessionFactory=new Configuration().configure("hibernate_files/hibernate.cfg.xml").buildSessionFactory();
+        if (sessionFactory == null) {
+            sessionFactory = new Configuration().configure("hibernate_files/hibernate.cfg.xml").buildSessionFactory();
         }
         return sessionFactory;
     }

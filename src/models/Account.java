@@ -25,7 +25,7 @@ public class Account {
     private Date expireDate;
     @Transient
     private final int countTransaction = 3;
-  //  private Map<Date,TransactionType> transactions;
+    //  private Map<Date,TransactionType> transactions;
     @ManyToOne(cascade = CascadeType.ALL)
     private User user;
 
@@ -103,7 +103,7 @@ public class Account {
             Account account = new Account();
             account.cartNumber = this.cartNumber;
             account.accountNumber = this.accountNumber;
-          //  account.transactions = this.transactions;
+            //  account.transactions = this.transactions;
             account.cvv2 = this.cvv2;
             account.expireDate = this.expireDate;
             account.accountType = this.accountType;
