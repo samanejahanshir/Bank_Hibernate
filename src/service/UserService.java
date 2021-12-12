@@ -35,11 +35,16 @@ public class UserService {
     }
 
     public double getBalance(User user, int accountNumber) throws SQLException, ClassNotFoundException {
-        UserDao userDao=new UserDao();
-        user=userDao.getUser(user);
+        UserDao userDao = new UserDao();
+        user = userDao.getUser(user);
         return user.getAccounts().get(0).getBalance();
 
     }
 
+    public int createAccount(User user) {
+        UserDao userDao = new UserDao();
+        return userDao.update(user);
 
+
+    }
 }

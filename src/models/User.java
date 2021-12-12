@@ -25,7 +25,7 @@ public class User {
     @UpdateTimestamp
     private Date infoUpdateLastDate;
     //  private Map<Date,String> listOfUpdates;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Account> accounts=new ArrayList<>();
 
 

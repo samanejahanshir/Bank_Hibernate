@@ -8,7 +8,7 @@ import models.User;
 import java.sql.SQLException;
 
 public class BankService {
-    public  int saveUserToDb(User user) throws SQLException, ClassNotFoundException {
+    public  int saveUserToDb(User user) {
         UserDao userDao=new UserDao();
         return userDao.save(user);
     }
@@ -16,7 +16,7 @@ public class BankService {
         AccountDao accountDao=new AccountDao();
         return accountDao.save(account) ;
     }
-    public User searchUser(User user,long cartNum) throws SQLException, ClassNotFoundException {
+    public User searchUser(User user,long cartNum)  {
         UserDao userDao=new UserDao();
         return  userDao.getUser(user);
     }

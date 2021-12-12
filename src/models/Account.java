@@ -21,13 +21,15 @@ public class Account {
     private AccountType accountType;
     private double balance;
     private int cvv2;
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date expireDate;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="fk_userId")
+    private User user;
     @Transient
     private final int countTransaction = 3;
     //  private Map<Date,TransactionType> transactions;
-    @ManyToOne(cascade = CascadeType.ALL)
-    private User user;
+
 
 
     public static final class AccountBuilder {
@@ -39,8 +41,8 @@ public class Account {
         private double balance;
         private int cvv2;
         private Date expireDate;
+        @ManyToOne(cascade = CascadeType.ALL)
         private User user;
-        private int countTransaction = 3;
      //   private Map<Date, TransactionType> transactions;
 
         private AccountBuilder() {
@@ -94,10 +96,10 @@ public class Account {
             return this;
         }
 
-        public AccountBuilder withCountTransaction(int countTransaction) {
+      /*  public AccountBuilder withCountTransaction(int countTransaction) {
             this.countTransaction = countTransaction;
             return this;
-        }
+        }*/
 
        /* public AccountBuilder withTransactions(Map<Date, TransactionType> transactions) {
             this.transactions = transactions;

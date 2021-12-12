@@ -11,7 +11,7 @@ import java.util.List;
 
 
 public class UserDao extends AccessDao {
-    public UserDao() throws SQLException, ClassNotFoundException {
+    public UserDao()  {
     }
 
     public int save(User user) {
@@ -32,7 +32,7 @@ public class UserDao extends AccessDao {
         return 1;
     }
 
-    public User getUser(User user) throws SQLException, ClassNotFoundException {
+    public User getUser(User user){
         Session session = AccessDao.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         CriteriaBuilder builder = session.getCriteriaBuilder();
